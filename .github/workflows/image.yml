@@ -1,0 +1,46 @@
+name: image
+
+on:
+  push:
+    branches: [main]
+  # weekly rebuild to pick up new yt-dlp, YouTube breaks old ones constantly
+  schedule:
+    - cron: "17 9 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  packages: write
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v6
+      - run: uv run pytest -q
+
+  build:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: docker/setup-buildx-action@v3
+      - uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - uses: docker/build-push-action@v6
+        with:
+          context: .
+          push: true
+          # unRAID boxes are x86, don't let an arm build sneak in
+          platforms: linux/amd64
+          tags: |
+            ghcr.io/${{ github.repository_owner }}/yt-grab:latest
+            ghcr.io/${{ github.repository_owner }}/yt-grab:${{ github.sha }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+          # cached pip layer would keep the old yt-dlp, defeating the point of the cron
+          no-cache: ${{ github.event_name == 'schedule' }}

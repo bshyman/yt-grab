@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<Container version="2">
+  <Name>yt-grab</Name>
+  <Repository>ghcr.io/bshyman/yt-grab:latest</Repository>
+  <Registry>https://github.com/bshyman/yt-grab/pkgs/container/yt-grab</Registry>
+  <Network>bridge</Network>
+  <Shell>sh</Shell>
+  <Privileged>false</Privileged>
+  <Project>https://github.com/bshyman/yt-grab</Project>
+  <Overview>Search or paste YouTube links, get tagged MP3s. Admin downloads land in the Plex music library, everyone else gets a file to save.</Overview>
+  <Category>Downloaders: MediaApp:Music</Category>
+  <WebUI>http://[IP]:[PORT:8000]/</WebUI>
+  <Config Name="WebUI port" Target="8000" Default="8000" Mode="tcp" Description="" Type="Port" Display="always" Required="true" Mask="false">8000</Config>
+  <Config Name="Music library" Target="/music" Default="/mnt/user/media/music" Mode="rw" Description="Your Plex music share. Admin downloads go to /music/YouTube/Artist/Album/Track.mp3" Type="Path" Display="always" Required="true" Mask="false">/mnt/user/media/music</Config>
+  <Config Name="Appdata" Target="/data" Default="/mnt/user/appdata/yt-grab" Mode="rw" Description="Job db, friends' downloads, caches" Type="Path" Display="always" Required="true" Mask="false">/mnt/user/appdata/yt-grab</Config>
+  <Config Name="Admin password" Target="ADMIN_PASSWORD" Default="" Mode="" Description="Unlocks 'Add to Plex' and skips limits" Type="Variable" Display="always" Required="true" Mask="true"></Config>
+  <Config Name="Plex URL" Target="PLEX_URL" Default="http://192.168.1.158:32400" Mode="" Description="" Type="Variable" Display="always" Required="false" Mask="false">http://192.168.1.158:32400</Config>
+  <Config Name="Plex token" Target="PLEX_TOKEN" Default="" Mode="" Description="" Type="Variable" Display="always" Required="false" Mask="true"></Config>
+  <Config Name="Plex music section ID" Target="PLEX_SECTION_ID" Default="" Mode="" Description="Number from /library/sections" Type="Variable" Display="always" Required="false" Mask="false"></Config>
+  <Config Name="Plex music path" Target="PLEX_MUSIC_PATH" Default="" Mode="" Description="Where Plex's container sees the music share, e.g. /media/music. Blank = rescan whole section" Type="Variable" Display="always" Required="false" Mask="false"></Config>
+  <Config Name="Daily limit per friend" Target="DAILY_LIMIT" Default="20" Mode="" Description="0 = unlimited" Type="Variable" Display="always" Required="false" Mask="false">20</Config>
+  <Config Name="Max video length (min)" Target="MAX_DURATION_MIN" Default="20" Mode="" Description="For friends. 0 = unlimited" Type="Variable" Display="always" Required="false" Mask="false">20</Config>
+  <Config Name="MP3 bitrate" Target="AUDIO_QUALITY" Default="320" Mode="" Description="kbps" Type="Variable" Display="advanced" Required="false" Mask="false">320</Config>
+  <Config Name="SponsorBlock" Target="SPONSORBLOCK" Default="true" Mode="" Description="Cut non-music segments out of music videos" Type="Variable" Display="advanced" Required="false" Mask="false">true</Config>
+  <Config Name="Converters" Target="CONVERTERS" Default="ytdlp,rapidapi" Mode="" Description="Tried in order" Type="Variable" Display="advanced" Required="false" Mask="false">ytdlp,rapidapi</Config>
+  <Config Name="RapidAPI key" Target="RAPIDAPI_KEY" Default="" Mode="" Description="Optional fallback when yt-dlp is broken" Type="Variable" Display="advanced" Required="false" Mask="true"></Config>
+  <Config Name="Library subfolder" Target="LIBRARY_SUBDIR" Default="YouTube" Mode="" Description="Blank = straight into /music" Type="Variable" Display="advanced" Required="false" Mask="false">YouTube</Config>
+  <Config Name="PUID" Target="PUID" Default="99" Mode="" Description="" Type="Variable" Display="advanced" Required="false" Mask="false">99</Config>
+  <Config Name="PGID" Target="PGID" Default="100" Mode="" Description="" Type="Variable" Display="advanced" Required="false" Mask="false">100</Config>
+  <Config Name="UMASK" Target="UMASK" Default="000" Mode="" Description="" Type="Variable" Display="advanced" Required="false" Mask="false">000</Config>
+</Container>
