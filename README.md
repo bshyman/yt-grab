@@ -21,7 +21,7 @@ Needs `ffmpeg` on PATH. Install `deno` too if you hit YouTube JS-challenge error
 1. Push to `github.com/bshyman/yt-grab`. Actions runs tests, builds `linux/amd64`, pushes `ghcr.io/bshyman/yt-grab:latest`. Rebuilds every Monday to pick up new yt-dlp.
 2. **Make the package public** (GitHub → Packages → yt-grab → settings). A private image means `docker login` on unRAID, and that login lives in RAM, so it's gone after a reboot.
 3. On .158: copy `unraid/yt-grab.xml` to `/boot/config/plugins/dockerMan/templates-user/my-yt-grab.xml`, then Docker → Add Container → pick `yt-grab`.
-4. Fill in the admin password + Plex bits (below). Check the music share path, the template guesses `/mnt/user/media/music`.
+4. Fill in the admin password + Plex bits (below). Check the music share path, the template points at the PICHU share (`/mnt/remotes/PICHU_Library/Music`, mounted `rw,slave` since it's a remote mount).
 5. In the template, turn on **Use Tailscale**, hostname `yt-grab`, Serve on. Then share the `yt-grab` machine with friends from the Tailscale admin console (Machines → ⋯ → Share).
 6. Install **CA Auto Update Applications** so the weekly images actually get pulled.
 
@@ -29,7 +29,7 @@ Needs `ffmpeg` on PATH. Install `deno` too if you hit YouTube JS-challenge error
 
 - `PLEX_TOKEN`: [finding your token](https://support.plex.tv/articles/204059436)
 - `PLEX_SECTION_ID`: `curl "http://192.168.1.158:32400/library/sections?X-Plex-Token=TOKEN"`, use the `key` of the music library
-- `PLEX_MUSIC_PATH`: the music share *as Plex's container sees it* (check binhex-plexpass's path mappings, probably `/media/music`). Leave blank and it rescans the whole section instead.
+- `PLEX_MUSIC_PATH`: the music share *as Plex's container sees it* (check binhex-plexpass's path mappings, for the PICHU share that's `/pichu-share/Music`). Leave blank and it rescans the whole section instead.
 
 ## Config
 

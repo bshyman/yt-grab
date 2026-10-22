@@ -11,7 +11,7 @@
   <Category>Downloaders: MediaApp:Music</Category>
   <WebUI>http://[IP]:[PORT:8000]/</WebUI>
   <Config Name="WebUI port" Target="8000" Default="8000" Mode="tcp" Description="" Type="Port" Display="always" Required="true" Mask="false">8000</Config>
-  <Config Name="Music library" Target="/music" Default="/mnt/user/media/music" Mode="rw" Description="Your Plex music share. Admin downloads go to /music/YouTube/Artist/Album/Track.mp3" Type="Path" Display="always" Required="true" Mask="false">/mnt/user/media/music</Config>
+  <Config Name="Music library" Target="/music" Default="/mnt/remotes/PICHU_Library/Music" Mode="rw,slave" Description="Your Plex music share. Admin downloads go to /music/YouTube/Artist/Album/Track.mp3" Type="Path" Display="always" Required="true" Mask="false">/mnt/remotes/PICHU_Library/Music</Config>
   <Config Name="Appdata" Target="/data" Default="/mnt/user/appdata/yt-grab" Mode="rw" Description="Job db, friends' downloads, caches" Type="Path" Display="always" Required="true" Mask="false">/mnt/user/appdata/yt-grab</Config>
   <Config Name="Admin password" Target="ADMIN_PASSWORD" Default="" Mode="" Description="Unlocks 'Add to Plex' and skips limits" Type="Variable" Display="always" Required="true" Mask="true"></Config>
   <Config Name="Plex URL" Target="PLEX_URL" Default="http://192.168.1.158:32400" Mode="" Description="" Type="Variable" Display="always" Required="false" Mask="false">http://192.168.1.158:32400</Config>
