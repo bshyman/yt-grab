@@ -1,6 +1,7 @@
 import asyncio
 import hashlib
 import hmac
+import html
 import logging
 import time
 from contextlib import asynccontextmanager
@@ -8,7 +9,7 @@ from pathlib import Path
 from typing import Literal
 
 from fastapi import FastAPI, HTTPException, Request, Response
-from fastapi.responses import FileResponse
+from fastapi.responses import FileResponse, HTMLResponse
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel, Field
 
@@ -159,6 +160,14 @@ def create_app(settings: Settings | None = None) -> FastAPI:
         if job["artist"]:
             name = f"{safe_name(job['artist'])} - {name}"
         return FileResponse(path, media_type="audio/mpeg", filename=f"{name}.mp3")
+
+    # index is a template only for the name, StaticFiles would serve it raw
+    index_html = (STATIC / "index.html").read_text().replace("{{APP_NAME}}", html.escape(settings.app_name))
+
+    @app.get("/", response_class=HTMLResponse)
+    @app.get("/index.html", response_class=HTMLResponse)
+    def index():
+        return index_html
 
     app.mount("/", StaticFiles(directory=STATIC, html=True), name="static")
     return app

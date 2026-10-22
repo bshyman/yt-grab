@@ -36,6 +36,7 @@ Needs `ffmpeg` on PATH. Install `deno` too if you hit YouTube JS-challenge error
 | Var | Default | |
 |---|---|---|
 | `ADMIN_PASSWORD` | | required for admin |
+| `APP_NAME` | `yt-grab` | page header + tab title |
 | `DAILY_LIMIT` | `20` | per friend, failed jobs don't count, 0 = off |
 | `MAX_DURATION_MIN` | `20` | friends only, 0 = off |
 | `AUDIO_QUALITY` | `320` | MP3 kbps |

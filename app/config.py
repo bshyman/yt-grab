@@ -26,6 +26,7 @@ class Settings:
     plex_token: str
     plex_section_id: str
     plex_music_path: str
+    app_name: str
 
     @property
     def library_enabled(self) -> bool:
@@ -52,4 +53,5 @@ def load_settings() -> Settings:
         plex_token=env("PLEX_TOKEN", ""),
         plex_section_id=env("PLEX_SECTION_ID", ""),
         plex_music_path=env("PLEX_MUSIC_PATH", ""),
+        app_name=env("APP_NAME", "yt-grab"),
     )

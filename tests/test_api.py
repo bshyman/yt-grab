@@ -89,3 +89,19 @@ def test_playlist_link_explains_itself(make_client):
     r = c.get("/api/search", params={"q": "https://www.youtube.com/playlist?list=PL123"})
     assert r.status_code == 400
     assert "playlist" in r.json()["detail"]
+
+
+def test_app_name_fills_title_and_header(make_client):
+    c = make_client(app_name="Sienna's <Song> Searcher")
+    html = c.get("/").text
+    assert "<title>Sienna&#x27;s &lt;Song&gt; Searcher</title>" in html
+    assert "<h1>Sienna&#x27;s &lt;Song&gt; Searcher</h1>" in html
+    assert "{{APP_NAME}}" not in html
+
+
+def test_app_name_defaults_to_yt_grab(make_client):
+    assert "<title>yt-grab</title>" in make_client().get("/").text
+
+
+def test_index_html_path_is_templated_too(make_client):
+    assert "{{APP_NAME}}" not in make_client().get("/index.html").text
